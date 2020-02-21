@@ -1,0 +1,31 @@
+version: '3'
+
+services:
+  firebase_cli:
+    build: '.'
+    environment:
+      FIREBASE_TOKEN: ${FIREBASE_TOKEN}
+    working_dir: /app
+    volumes:
+      - ./:/app
+    ports:
+      - 5000:5000
+      - 5001:5001
+    command: firebase serve --host 0.0.0.0
+
+  function:
+    build: './functions'
+    working_dir: /app/functions
+    volumes:
+      - /app/functions/node_modules
+      - ./functions:/app/functions
+
+  hosting:
+    build: ./hosting
+    working_dir: /app/hosting
+    volumes:
+      - /app/hosting/node_modules
+      - ./hosting:/app/hosting
+    ports:
+      - 3000:3000
+    command: yarn start
