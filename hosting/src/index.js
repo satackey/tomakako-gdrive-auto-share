@@ -16,6 +16,7 @@ import './index.css'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
 import './firebase'
+import 'react-bulma-components/dist/react-bulma-components.min.css'
 
 ReactDOM.render(
   <Provider store={store}>

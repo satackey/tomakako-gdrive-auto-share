@@ -1,6 +1,6 @@
 import { combineReducers } from "redux"
 // import visibilityFilter from "./visibilityFilter"
 // import todos from "./todos"
-import auth from './auth'
+import office365Auth from './office365Auth'
 
-export default combineReducers({ auth })
+export default combineReducers({ office365Auth })
