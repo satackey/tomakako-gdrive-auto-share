@@ -10,7 +10,7 @@ import Office365Auth from './components/Office365Auth'
 import { Office365認証がされていない, Office365認証成功した, Office365認証失敗した } from './redux/actions'
 import GoogleAuth from './components/GoogleAuth'
 import { Google連携がされていない, Google連携成功した, Google連携失敗した } from './redux/actions'
-
+import JoinDrive from './components/JoinDrive'
 
 const App = props => {
   useEffect(() => {
@@ -21,6 +21,7 @@ const App = props => {
     <div className="container is-fluid">
       <Office365Auth />
       <GoogleAuth />
+      <JoinDrive />
     </div>
   )
 }

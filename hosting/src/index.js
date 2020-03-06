@@ -1,22 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
-// import {
-//   FirebaseAuthProvider,
-//   FirebaseAuthConsumer,
-//   IfFirebaseAuthed,
-//   IfFirebaseAuthedAnd,
-// } from "@react-firebase/auth"
-// import { firebaseConfig } from './firebase'
-
 import { Provider } from 'react-redux'
-import store from './redux/store'
-// import rootReducer from './reducers'
+
+import 'react-bulma-components/dist/react-bulma-components.min.css'
+// import 'bulma-extensions/bulma-checkradio/dist/css/bulma-checkradio.min.css'
+
 import './index.css'
+
+import './firebase'
+import store from './redux/store'
 import App from './App'
 import * as serviceWorker from './serviceWorker'
-import './firebase'
-import 'react-bulma-components/dist/react-bulma-components.min.css'
 
 ReactDOM.render(
   <Provider store={store}>
