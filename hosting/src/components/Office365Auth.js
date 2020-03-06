@@ -4,7 +4,6 @@ import { connect } from 'react-redux'
 import cx from "classnames"
 
 import firebase from 'firebase/app'
-import 'firebase/auth'
 
 import { Office365認証する } from '../redux/actions'
 import { Button } from 'react-bulma-components/dist'

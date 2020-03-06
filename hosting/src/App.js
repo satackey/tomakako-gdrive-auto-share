@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 import firebase from 'firebase/app'
-import 'firebase/auth'
 
 import './App.css'
 
