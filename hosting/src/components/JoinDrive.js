@@ -2,15 +2,16 @@ import React, { useState } from 'react'
 import { connect } from 'react-redux'
 
 import cx from "classnames"
-
 import { Button } from 'react-bulma-components/dist'
+
+import { Drive共有に参加する } from '../redux/actions'
 
 const JoinDrive = props => {
   const [二次配布禁止に同意, set二次配布禁止に同意] = useState(false)
   const [自己責任を理解, set自己責任を理解] = useState(false)
   const [協力に同意, set協力に同意] = useState(false)
   const 参加準備完了か = props.参加認証完了 && 二次配布禁止に同意 && 自己責任を理解 && 協力に同意
-
+  const チェックボックス無効か = props.表示 === '参加処理中'
   return (
     <section className="card">
       <div className="card-header">
@@ -19,79 +20,112 @@ const JoinDrive = props => {
         </div>
       </div>
 
-      { props.参加認証完了 &&
-        
+      { (props.参加認証完了 || props.表示 === '読み込み中') &&
       <div className='card-content'>
-        <p>
-          提供しているコンテンツの二次配布は禁止しております。<br />
-          また、コンテンツを利用してのいかなる障害・損害において一切責任を負いません。<br />
-          自己責任の上、ご利用お願いします。
-        </p>
+        { props.表示 === '初期読み込み中' && <>
+          <Button
+            className="is-loading"
+            onClick={ props.参加する }
+          >
+            Google Drive共有に参加
+          </Button>
+        </>}
 
-        <p>
-          <input type="checkbox"
-            className="is-checkradio"
-            checked={二次配布禁止に同意}
-            onChange={e => {console.log(e);set二次配布禁止に同意(!二次配布禁止に同意)}}
-          />
-          <label>
-            コンテンツの二次配布を行いません
-          </label>
-        </p>
+        { props.参加認証完了 && (props.表示 === '参加要求' || props.表示 === '参加処理中') && <>
+          <p>
+            提供しているコンテンツの二次配布は禁止しております。<br />
+            また、コンテンツを利用してのいかなる障害・損害において一切責任を負いません。<br />
+            自己責任の上、ご利用お願いします。
+          </p>
 
-        <p>
-          <input type="checkbox"
-            className="is-checkradio"
-            checked={自己責任を理解}
-            onChange={() => set自己責任を理解(!自己責任を理解)}
-          />
-          <label>
-            画像及びファイルを利用は自己責任であることを理解しました
-          </label>
-        </p>
-        <br />
-        <p>
-          こちらで提供しているコンテンツは有志による取り組みによって成り立っています。
-        </p>
+          <p>
+            <input type="checkbox"
+              className="is-checkradio"
+              checked={二次配布禁止に同意}
+              disabled={チェックボックス無効か}
+              onChange={ () => set二次配布禁止に同意(!二次配布禁止に同意) }
+            />
+            <label>
+              コンテンツの二次配布を行いません
+            </label>
+          </p>
 
-        <p>
-          <input type="checkbox"
-            className="is-checkradio"
-            checked={協力に同意}
-            onChange={() => set協力に同意(!協力に同意)}
-          />
-          <label>
-            コンテンツの提出・管理などの取り組みに協力します
-          </label>
-        </p>
+          <p>
+            <input type="checkbox"
+              className="is-checkradio"
+              checked={自己責任を理解}
+              disabled={チェックボックス無効か}
+              onChange={ () => set自己責任を理解(!自己責任を理解) }
+            />
+            <label>
+              画像及びファイルを利用は自己責任であることを理解しました
+            </label>
+          </p>
+          <br />
+          <p>
+            こちらで提供しているコンテンツは有志による取り組みによって成り立っています。
+          </p>
 
-        <Button
-          className={cx(
-            props.表示 === '参加処理中' && 'is-loading',
-            参加準備完了か && 'is-primary',
-          )}
+          <p>
+            <input type="checkbox"
+              className="is-checkradio"
+              checked={協力に同意}
+              disabled={チェックボックス無効か}
+              onChange={ () => set協力に同意(!協力に同意) }
+            />
+            <label>
+              コンテンツの提出・管理などの取り組みに協力します
+            </label>
+          </p>
 
-          disabled={ !参加準備完了か }
-          onClick={ props.参加する }
-        >
-          Google Drive共有に参加
-        </Button>
+          <Button
+            className={cx(
+              props.表示 === '参加処理中' && 'is-loading',
+              参加準備完了か && 'is-primary',
+            )}
+
+            disabled={ !参加準備完了か || チェックボックス無効か }
+            onClick={ props.参加する }
+          >
+            Google Drive共有に参加
+          </Button>
+        </>}
+
+        { props.表示 === '失敗' &&
+          <div>
+            参加に失敗しました。エラー: { props.認証失敗のメッセージ }
+          </div>
+        }
+
+
+        { props.表示 === '完了' && <>
+          <div>
+            参加が完了しました
+          </div>
+          <a href={`https://drive.google.com/drive/folders/${props.ドライブID}`}>
+            <Button className="is-primary">
+              Driveをみる
+            </Button>
+          </a>
+        </>}
 
       </div>
-
       }
+
     </section>
   )
 }
 
 const mapStateToProps = state => ({
+  表示: state.joinDrive.表示,
   参加認証完了: state.office365Auth.表示 === '完了' && state.googleAuth.表示 === '完了',
-
+  送信されたメール: state.joinDrive.送信されたメール,
+  ドライブID: state.joinDrive.ドライブID,
 })
 
 const mapDispatchToProps = dispatch => ({
   参加する() {
-
+    dispatch(Drive共有に参加する())
   },
 })
 

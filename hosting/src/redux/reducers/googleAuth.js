@@ -17,7 +17,6 @@ export default (state = initalState, action) => {
     }
 
     case Google連携_待機: {
-      console.log(Google連携_待機)
       return Object.assign({}, state, {
         表示: 'リダイレクト中',
         メール: '',

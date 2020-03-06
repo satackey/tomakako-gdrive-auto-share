@@ -1,24 +1,24 @@
 version: '3'
 
 services:
-  firebase_cli:
+  firebase_serve:
     build: '.'
     environment:
       FIREBASE_TOKEN: ${FIREBASE_TOKEN}
+      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
     working_dir: /app
     volumes:
+      - /app/functions/node_modules
       - ./:/app
+    # network_mode: host
     ports:
       - 5000:5000
       - 5001:5001
-    command: firebase serve --host 0.0.0.0
-
-  function:
-    build: './functions'
-    working_dir: /app/functions
-    volumes:
-      - /app/functions/node_modules
-      - ./functions:/app/functions
+    # command: firebase emulators:start
+    # entrypoint: bash
+    command: firebase serve --host 0.0.0.0 
+    networks:
+      - proxy_network
 
   hosting:
     build: ./hosting
@@ -29,3 +29,8 @@ services:
     ports:
       - 3000:3000
     command: yarn start
+    networks:
+      - proxy_network
+
+networks:
+  proxy_network:

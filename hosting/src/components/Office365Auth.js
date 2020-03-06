@@ -19,9 +19,7 @@ const Office365Auth = props => {
         </div>
       </div>
 
-      <div className={cx(
-        'card-content',
-      )}>
+      <div className="card-content">
       {
         props.表示 === '初期読み込み中'
         ?
