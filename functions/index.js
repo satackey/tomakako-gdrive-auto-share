@@ -60,11 +60,10 @@ const removeUserFromDrive = email => {
 
 exports.join = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
     try {
-
+      res.set('Access-Control-Allow-Origin', 'https://tomakako.web.app')
+      res.set('Access-Control-Allow-Methods', 'OPTIONS, POST')
+      res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
       if (req.method === 'OPTIONS') {
-        res.set('Access-Control-Allow-Origin', 'https://tomakako.web.app'); // localhostを許可
-        res.set('Access-Control-Allow-Methods', 'OPTIONS, POST'); // DELETEだけは拒否
-        res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Content-Typeのみを許可
         res.status(200).send()
         return
       }
