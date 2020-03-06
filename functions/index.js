@@ -12,9 +12,9 @@ const { google } = require('googleapis')
 admin.initializeApp()
 
 
-// const FOLDER_ID = functions.config().drive.folder.id
-// const API_CLIENT_EMAIL = functions.config().drive.api.clientemail
-// const API_PRIVATE_KEY = functions.config().drive.api.privatekey
+const FOLDER_ID = functions.config().drive.folder.id
+const API_CLIENT_EMAIL = functions.config().drive.api.clientemail
+const API_PRIVATE_KEY = functions.config().drive.api.privatekey
 
 const createAuthorizedClient = async () => {
   const client  = new google.auth.JWT(
