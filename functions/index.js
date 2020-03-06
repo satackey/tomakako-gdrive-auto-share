@@ -64,7 +64,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       if (req.method === 'OPTIONS') {
         res.set('Access-Control-Allow-Origin', 'https://tomakako.web.app'); // localhostを許可
         res.set('Access-Control-Allow-Methods', 'OPTIONS, POST'); // DELETEだけは拒否
-        res.set('Access-Control-Allow-Headers', 'Content-Type'); // Content-Typeのみを許可
+        res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization'); // Content-Typeのみを許可
         res.status(200).send()
         return
       }
