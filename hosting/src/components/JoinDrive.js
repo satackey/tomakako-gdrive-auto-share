@@ -104,7 +104,7 @@ const JoinDrive = props => {
           </div>
           <a href={`https://drive.google.com/drive/folders/${props.ドライブID}`}>
             <Button className="is-primary">
-              Driveをみる
+              Googleドライブをみる
             </Button>
           </a>
         </>}
