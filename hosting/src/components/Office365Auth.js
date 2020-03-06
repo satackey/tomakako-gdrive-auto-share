@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import cx from "classnames"
@@ -6,19 +6,16 @@ import cx from "classnames"
 import firebase from 'firebase/app'
 import 'firebase/auth'
 
-import { Office365認証を表示する, Office365認証する, 認証待機する, 認証成功した, 認証失敗した } from '../redux/actions'
+import { Office365認証する } from '../redux/actions'
 import { Button } from 'react-bulma-components/dist'
 
 const Office365Auth = props => {
-  useEffect(() => {
-    props.ログインをチェックする()
-  })
   return (
     <section className="card">
       <div className="card-header">
 
         <div className="card-header-title">
-          学校のOffice365アカウントを認証
+          ステップ1. 学校のOffice365アカウントを認証
         </div>
       </div>
 
@@ -43,7 +40,7 @@ const Office365Auth = props => {
         ?
         <>
           <div>
-            認証されていません
+            学校のアカウントのみ使用できます
           </div>
           <div>
             <Button
@@ -56,17 +53,16 @@ const Office365Auth = props => {
               Office365アカウントを認証
             </Button>
           </div>
-          { props.表示 === '失敗' ?
+          { props.表示 === '失敗' &&
             <div>
               認証に失敗しました。エラー: { props.認証失敗のメッセージ }
             </div>
-            : <></>
           }
         </>
         :
         <>
           <div>
-          { props.office365のメール } として認証されました
+            認証済み: { props.office365のメール }
           </div>
           <div>
             <Button onClick={ props.ログアウトする }>
@@ -81,51 +77,21 @@ const Office365Auth = props => {
   )
 }
 
-const mapStateToProps = state => {
-  console.log('state', state)
-  return {
-    表示: state.office365Auth.office365表示,
-    office365のメール: state.office365Auth.office365のメール,
-    認証失敗のメッセージ: state.office365Auth.認証失敗のメッセージ,
-  }
-}
+const mapStateToProps = state => ({
+  表示: state.office365Auth.表示,
+  office365のメール: state.office365Auth.メール,
+  認証失敗のメッセージ: state.office365Auth.認証失敗のメッセージ,
+})
 
-const mapDispatchToProps = (dispatch, props) => {
-  return {
-    ログインをチェックする() {
+const mapDispatchToProps = (dispatch, props) => ({
+  ログインする() {
+    dispatch(Office365認証する())
+  },
 
-      firebase.auth().getRedirectResult().then(result => {
-        console.log(result)
-      }).catch(e => {
-        console.error('getRedirectResult', e)
-        dispatch(認証失敗した(e.message))
-      })
-
-      firebase.auth().onAuthStateChanged(user => {
-        if (!user) {
-          dispatch(Office365認証を表示する())
-          console.log('unauthorized')
-          return
-        }
-
-        console.log('authorized',user.email)
-        dispatch(認証成功した(user))
-      }, e => {
-        console.error('onAuthStateChanged', e)
-        dispatch(認証失敗した(e.message))
-      })
-    },
-
-    ログインする() {
-      dispatch(Office365認証する())
-    },
-
-    ログアウトする() {
-      firebase.auth().signOut()
-    },
-  }
-}
-
+  ログアウトする() {
+    firebase.auth().signOut()
+  },
+})
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
