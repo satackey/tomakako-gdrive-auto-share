@@ -87,7 +87,7 @@ const JoinDrive = props => {
             disabled={ !参加準備完了か || チェックボックス無効か }
             onClick={ props.参加する }
           >
-            Google Drive共有に参加
+            Googleドライブ共有に参加
           </Button>
         </>}
 
