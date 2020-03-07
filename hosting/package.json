@@ -43,5 +43,5 @@
   "devDependencies": {
     "redux-devtools": "^3.5.0"
   },
-  "proxy": "http://firebase_serve:5001/tomakako/us-central1"
+  "proxy": "http://firebase_serve:5001/"
 }

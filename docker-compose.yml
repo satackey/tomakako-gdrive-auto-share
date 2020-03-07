@@ -8,15 +8,15 @@ services:
       GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
     working_dir: /app
     volumes:
-      - /app/functions/node_modules
       - ./:/app
+      - /app/functions/node_modules
     # network_mode: host
     ports:
       - 5000:5000
       - 5001:5001
     # command: firebase emulators:start
     # entrypoint: bash
-    command: firebase serve --host 0.0.0.0 
+    command: sh -c 'firebase functions:config:get > functions/.runtimeconfig.json && firebase serve --host 0.0.0.0'
     networks:
       - proxy_network
 
