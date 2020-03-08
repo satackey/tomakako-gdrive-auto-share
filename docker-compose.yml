@@ -3,9 +3,7 @@ version: '3'
 services:
   firebase_serve:
     build: '.'
-    environment:
-      FIREBASE_TOKEN: ${FIREBASE_TOKEN}
-      GOOGLE_APPLICATION_CREDENTIALS: ${GOOGLE_APPLICATION_CREDENTIALS}
+    env_file: .env
     working_dir: /app
     volumes:
       - ./:/app
