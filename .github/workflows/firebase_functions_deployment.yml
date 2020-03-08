@@ -11,6 +11,8 @@ on:
       # hosting ディレクトリとgit直下のファイルが変更された時に実行する
       - 'hosting/**'
       - '*'
+      # Workflowが変更された時も実行する
+      - '.github/workflows/firebase_functions_deployment.yml'
 
 jobs:
   deploy:
