@@ -1,0 +1,28 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Deploy to Firebase hosting
+
+# Controls when the action will run. Triggers the workflow on push or pull request 
+# events but only for the master branch
+on:
+  push:
+    branches: [ master ]
+
+
+jobs:
+  deploy:
+    
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout ${{ github.repository }}
+      uses: actions/checkout@v2
+    
+    - name: Extract environment variable
+      run: echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" > .env
+
+    - name: Start containers
+      run: docker-compose up -d
+ 
+    - name: Deploy
+      run: docker-compose exec -T firebase_serve firebase deploy --only functions
