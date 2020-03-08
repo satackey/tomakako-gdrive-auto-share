@@ -7,22 +7,25 @@ name: Deploy to Firebase hosting
 on:
   push:
     branches: [ master ]
-
+    paths:
+      # hosting ディレクトリとgit直下のファイルが変更された時に実行する
+      - 'hosting/**'
+      - '*'
 
 jobs:
   deploy:
-    
+
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout ${{ github.repository }}
       uses: actions/checkout@v2
-    
+
     - name: Extract environment variable
       run: echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" > .env
 
     - name: Start containers
       run: docker-compose up -d
- 
+
     - name: Deploy
       run: docker-compose exec -T firebase_serve firebase deploy --only functions

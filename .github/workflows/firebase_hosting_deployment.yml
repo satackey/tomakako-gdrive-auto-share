@@ -2,18 +2,19 @@
 
 name: Deploy to Firebase hosting
 
-# Controls when the action will run. Triggers the workflow on push or pull request 
-# events but only for the master branch
 on:
   push:
     branches: [ master ]
-
+    paths:
+      # hosting ディレクトリとgit直下のファイルが変更された時に実行する
+      - 'functions/**'
+      - '*'
 
 jobs:
   deploy:
-    
+
     runs-on: ubuntu-latest
-    
+
     steps:
     - name: Checkout ${{ github.repository }}
       uses: actions/checkout@v2
@@ -24,9 +25,8 @@ jobs:
     - name: Start containers
       run: docker-compose up -d
 
-    # Runs a set of commands using the runners shell
     - name: Build React files
       run: docker-compose exec -T hosting yarn build
-    
+
     - name: Publish
       run: docker-compose exec -T firebase_serve firebase deploy --only hosting
