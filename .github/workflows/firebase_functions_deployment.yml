@@ -8,8 +8,8 @@ on:
   push:
     branches: [ master ]
     paths:
-      # hosting ディレクトリとgit直下のファイルが変更された時に実行する
-      - 'hosting/**'
+      # functions ディレクトリとgit直下のファイルが変更された時に実行する
+      - 'functions/**'
       - '*'
       # Workflowが変更された時も実行する
       - '.github/workflows/firebase_functions_deployment.yml'
