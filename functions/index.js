@@ -91,7 +91,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       const office365Email = '' || (user && user.providerData.filter(prov => prov.providerId === 'microsoft.com')[0].email)
       const googleEmail = '' || (user && user.providerData.filter(prov => prov.providerId === 'google.com')[0].email)
 
-      if (!office365Email.endsWith('@tomakomai.kosen-ac.jp') && googleEmail === '') {
+      if (!office365Email.endsWith('@tomakomai.kosen-ac.jp') || googleEmail === '') {
         res.status(403).send()
         return
       }
