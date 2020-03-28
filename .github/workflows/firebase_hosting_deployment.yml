@@ -4,7 +4,8 @@ name: Deploy to Firebase hosting
 
 on:
   push:
-    branches: [ master ]
+    branches:
+    - '**'
     paths:
       # hosting ディレクトリとgit直下のファイルが変更された時に実行する
       - 'hosting/**'
@@ -24,11 +25,12 @@ jobs:
     - name: Extract environment variable
       run: echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" > .env
 
-    - name: Start containers
-      run: docker-compose up -d
+    - name: build containers
+      run: docker-compose build
 
     - name: Build React files
-      run: docker-compose exec -T hosting yarn build
+      run: docker-compose run -T hosting yarn build
 
     - name: Publish
-      run: docker-compose exec -T firebase_serve firebase deploy --only hosting
+      if: github.ref == 'heads/ref/master'
+      run: docker-compose run -T firebase_serve firebase deploy --only hosting
