@@ -6,7 +6,8 @@ name: Deploy to Firebase functions
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches:
+    - '**'
     paths:
       # functions ディレクトリとgit直下のファイルが変更された時に実行する
       - 'functions/**'
@@ -26,8 +27,9 @@ jobs:
     - name: Extract environment variable
       run: echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" > .env
 
-    - name: Start containers
-      run: docker-compose up -d
+    - name: build containers
+      run: docker-compose build
 
     - name: Deploy
-      run: docker-compose exec -T firebase_serve firebase deploy --only functions
+      if: github.ref == 'heads/ref/master'
+      run: docker-compose run -T firebase_serve firebase deploy --only functions
