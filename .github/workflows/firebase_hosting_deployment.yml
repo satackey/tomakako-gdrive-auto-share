@@ -32,5 +32,5 @@ jobs:
       run: docker-compose run -T hosting yarn build
 
     - name: Publish
-      if: github.ref == 'heads/refs/master'
+      if: github.ref == 'refs/heads/master'
       run: docker-compose run -T firebase_serve firebase deploy --only hosting
