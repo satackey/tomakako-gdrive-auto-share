@@ -31,5 +31,5 @@ jobs:
       run: docker-compose build
 
     - name: Deploy
-      if: github.ref == 'heads/ref/master'
+      if: github.ref == 'refs/heads/master'
       run: docker-compose run -T firebase_serve firebase deploy --only functions
