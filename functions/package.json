@@ -13,7 +13,7 @@
     "node": "8"
   },
   "dependencies": {
-    "firebase-admin": "^8.12.0",
+    "firebase-admin": "^8.12.1",
     "firebase-functions": "^3.6.1",
     "googleapis": "^48.0.0"
   },
