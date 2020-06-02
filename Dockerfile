@@ -8,7 +8,7 @@ RUN set -x \
     && apt-get update \
     && apt-get install -y zulu-13
 
-RUN yarn global add firebase-tools \
+RUN curl -sL firebase.tools | bash \
     && firebase setup:emulators:firestore
 
 WORKDIR /app/functions
