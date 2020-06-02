@@ -6,7 +6,7 @@ RUN set -x \
     && apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 0xB1998361219BD9C9 \
     && apt-add-repository 'deb http://repos.azulsystems.com/debian stable main' \
     && apt-get update \
-    && apt-get install -y zulu-13
+    && apt-get install -y zulu-13 sudo
 
 RUN curl -sL firebase.tools | bash \
     && firebase setup:emulators:firestore
