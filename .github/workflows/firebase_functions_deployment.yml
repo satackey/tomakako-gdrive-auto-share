@@ -27,6 +27,8 @@ jobs:
     - name: Extract environment variable
       run: echo "FIREBASE_TOKEN=${{ secrets.FIREBASE_TOKEN }}" > .env
 
+    - uses: satackey/action-docker-layer-caching@v0.0
+
     - name: build containers
       run: docker-compose build
 
