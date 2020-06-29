@@ -8891,10 +8891,10 @@ react-app-polyfill@^1.0.6:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-bulma-components@^3.3.0:
-  version "3.3.0"
-  resolved "https://registry.yarnpkg.com/react-bulma-components/-/react-bulma-components-3.3.0.tgz#11ccd61d5da1aafab3418595288a04fc35ddb368"
-  integrity sha512-EEAiXEyXFI58dpTxCMQmz+t3KNILVgHsFNMimzJBOi/qmXmP2aAKENx3RqtE99owHJJcifVv8A2Lj73eqgE0BA==
+react-bulma-components@^3.4.0:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/react-bulma-components/-/react-bulma-components-3.4.0.tgz#6a6e4ddbb2564aa8fb59d2b805137238b94d428c"
+  integrity sha512-d8FqFHt6zauD+xKuNwhNaTj4BbPQugREGUrZCAyUpt3431ayCprFaV7Ni3OXo2U158SmJKcBd+ND8JoDJZX8AA==
   dependencies:
     bulma "0.8.2"
     classnames "2.2.6"
