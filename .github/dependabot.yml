@@ -1,0 +1,30 @@
+version: 2
+updates:
+- package-ecosystem: docker
+  directory: "/"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/functions"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+- package-ecosystem: npm
+  directory: "/hosting"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
+- package-ecosystem: docker
+  directory: "/hosting"
+  schedule:
+    interval: daily
+    time: "06:00"
+    timezone: Asia/Tokyo
+  open-pull-requests-limit: 10
