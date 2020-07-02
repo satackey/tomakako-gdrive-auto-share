@@ -1,4 +1,4 @@
-FROM node:8.17.0-slim
+FROM node:14.5.0-slim
 
 RUN set -x \
     && mkdir -p /usr/share/man/man1 \
