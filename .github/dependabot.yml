@@ -6,8 +6,9 @@ updates:
     interval: daily
     time: "06:00"
     timezone: Asia/Tokyo
+  ignore:
   - dependency-name: node
-    version: [>= 9]
+    version: [">= 9"]
   open-pull-requests-limit: 10
 - package-ecosystem: npm
   directory: "/functions"
@@ -31,5 +32,5 @@ updates:
     timezone: Asia/Tokyo
   ignore:
   - dependency-name: node
-    version: [>= 13]
+    version: [">= 13"]
   open-pull-requests-limit: 10
