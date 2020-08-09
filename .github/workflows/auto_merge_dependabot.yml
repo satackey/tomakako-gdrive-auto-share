@@ -1,0 +1,23 @@
+name: Auto merge dependabot pull requests
+
+on:
+  pull_request:
+    branches:
+    - master
+
+jobs:
+  comment_merge_request:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/github-script@v2
+      if: github.actor == 'dependabot'
+      with:
+        github-token: ${{ secrets.ACCESS_TOEKN_AUTO_MERGE_DEPENDABOT_PR_BOT }}
+        script: |
+          await github.issues.createComment({
+            issue_number: context.issue.number,
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            body: '@dependabot merge'
+          })
