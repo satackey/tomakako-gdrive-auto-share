@@ -41,7 +41,7 @@
     ]
   },
   "devDependencies": {
-    "redux-devtools": "^3.6.1"
+    "redux-devtools": "^3.7.0"
   },
   "proxy": "http://firebase_serve:5001/"
 }
