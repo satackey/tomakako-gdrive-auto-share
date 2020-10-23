@@ -1,0 +1,14 @@
+name: Clear cache
+
+on:
+  workflow_dispatch:
+
+jobs:
+  save_big_cache:
+    runs-on: ubuntu-latest
+    steps:
+      - run: dd if=/dev/urandom of=file.txt count=8192 bs=1048576
+      - uses: actions/cache@v2
+        with:
+          key: cache-${{ github.sha }}-${{ github.token }}
+          path: file.txt
