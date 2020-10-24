@@ -6,9 +6,9 @@ on:
 jobs:
   save_big_cache:
     runs-on: ubuntu-latest
-    steps:
-      - run: dd if=/dev/urandom of=file.txt count=8192 bs=1048576
+    steps:      
       - uses: actions/cache@v2
         with:
           key: cache-${{ github.sha }}-${{ github.token }}
           path: file.txt
+      - run: dd if=/dev/urandom of=file.txt count=5120 bs=1048576
