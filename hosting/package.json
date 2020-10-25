@@ -13,7 +13,7 @@
     "firebase": "^7.24.0",
     "react": "^16.14.0",
     "react-bulma-components": "^3.4.0",
-    "react-dom": "^16.13.1",
+    "react-dom": "^16.14.0",
     "react-redux": "^7.2.1",
     "react-scripts": "4.0.0",
     "redux": "^4.0.5",
