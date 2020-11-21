@@ -4,20 +4,14 @@ on:
   pull_request:
     branches:
     - master
+  push:
 
 jobs:
   comment_merge_request:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/github-script@v2
-      if: github.actor == 'dependabot[bot]'
+    - uses: satackey/action-automerge-dependabot-pr
+#       if: github.actor == 'dependabot[bot]'
       with:
         github-token: ${{ secrets.ACCESS_TOEKN_AUTO_MERGE_DEPENDABOT_PR_BOT }}
-        script: |
-          await github.issues.createComment({
-            issue_number: context.issue.number,
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            body: '@dependabot merge'
-          })
