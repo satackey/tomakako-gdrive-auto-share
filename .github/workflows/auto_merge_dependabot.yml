@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: satackey/action-automerge-dependabot-pr
+    - uses: satackey/action-automerge-dependabot-pr@master
 #       if: github.actor == 'dependabot[bot]'
       with:
         github-token: ${{ secrets.ACCESS_TOEKN_AUTO_MERGE_DEPENDABOT_PR_BOT }}
