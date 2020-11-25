@@ -1,4 +1,4 @@
-FROM node:12.19.1-alpine
+FROM node:12.20.0-alpine
 
 RUN yarn global add create-react-app
 
