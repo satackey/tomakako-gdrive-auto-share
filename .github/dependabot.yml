@@ -8,7 +8,7 @@ updates:
     timezone: Asia/Tokyo
   ignore:
   - dependency-name: node
-    versions: [">= 9"]
+    versions: ["> 10"]
   open-pull-requests-limit: 10
 - package-ecosystem: npm
   directory: "/functions"
