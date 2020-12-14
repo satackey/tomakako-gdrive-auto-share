@@ -42,10 +42,11 @@ const inviteUserToDrive = async email => {
     resource: {
       'type': 'user',
       'role': 'reader',
-      'emailAddress': email,
+      'emailAddress': email
     },
     fileId: FOLDER_ID,
     fields: 'id',
+    'sendNotificationEmail': true,
   })
 
   if (result.status === 200) {
