@@ -97,7 +97,11 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         return
       }
 
-      // Todo: 先生の場合は弾く！！！
+      // 先生の場合は弾く
+      if (!office365Email.match(/^[a-z]{2}[0-9]{3}/)) {
+        res.status(403).send()
+        return
+      }
 
       // Todo: すでに招待済みではないか検索
       const inviteOk = await inviteUserToDrive(googleEmail)
