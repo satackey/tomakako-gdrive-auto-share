@@ -107,15 +107,15 @@ const JoinDrive = props => {
               Googleドライブをみる
             </Button>
           </a>
-          <div>
+          <p>
             <Button className={
               cx(
                 props.表示 === '脱退処理中' && 'is-loading',
               )}
-              onClick={ props.Drive共有から脱退する }>
-              参加をやめる (脱退)
+              onClick={ props.脱退する }>
+              参加をやめる (脱退)
             </Button>
-          </div>
+          </p>
         </>}
 
         { props.表示 === '脱退失敗' &&
