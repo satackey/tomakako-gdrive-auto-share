@@ -59,7 +59,7 @@ const removeUserFromDrive = async uid => {
   const drive = await createDriveClient()
   const db = admin.firestore()
   const userRef = db.doc(`users/${uid}`)
-  const userData = userRef.get().data()
+  const userData = (await userRef.get()).data()
   const result = drive.permissions.delete({
     fileId: userData.invitedTo,
     permissionId: userData.permissionId,
