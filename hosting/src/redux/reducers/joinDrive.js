@@ -1,10 +1,11 @@
-import { Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗 } from '../actionTypes'
+import { Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗, Drive脱退_待機, Drive脱退_失敗 } from '../actionTypes'
 
 const initalState = {
   表示: '初期読み込み中',
   送信されたメール: '',
   招待された日時: '',
   認証失敗のメッセージ: '',
+  脱退失敗のメッセージ: '',
   ドライブID: '',
 }
 
@@ -46,6 +47,26 @@ export default (state = initalState, action) => {
         送信されたメール: '',
         招待された日時: '',
         認証失敗のメッセージ: action.message,
+        ドライブID: '',
+      })
+    }
+
+    case Drive脱退_待機: {
+      return Object.assign({}, state, {
+        表示: '脱退処理中',
+        送信されたメール: '',
+        招待された日時: '',
+        認証失敗のメッセージ: '',
+        ドライブID: '',
+      })
+    }
+
+    case Drive脱退_失敗: {
+      return Object.assign({}, state, {
+        表示: '脱退失敗',
+        送信されたメール: '',
+        招待された日時: '',
+        脱退失敗のメッセージ: action.message,
         ドライブID: '',
       })
     }

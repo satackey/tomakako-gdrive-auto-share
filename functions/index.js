@@ -55,8 +55,21 @@ const inviteUserToDrive = async email => {
   return false
 }
 
-const removeUserFromDrive = email => {
+const removeUserFromDrive = uid => {
+  const db = admin.firestore()
+  const userRef = db.doc(`users/${uid}`)
+  const userData = userRef.get().data()
+  const result = await createDriveClient().permissions.delete({
+    fileId: userData.invitedTo,
+    permissionId: userData.permissionId,
+  })
 
+  if (result.status !== 200) {
+    throw new Error(JSON.stringify(reuslt))
+  }
+
+  userRef.delete()
+  return true
 }
 
 exports.join = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
@@ -130,3 +143,38 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       res.status(500).send()
     }
   })
+
+exports.leave = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
+  try {
+    res.set('Access-Control-Allow-Origin', 'https://tomakako.web.app')
+    res.set('Access-Control-Allow-Methods', 'OPTIONS, POST')
+    res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+    if (req.method === 'OPTIONS') {
+      res.status(200).send()
+      return
+    }
+
+    if (req.method !== 'POST') {
+      res.status(405).send()
+      return
+    }
+
+    // https://qiita.com/kuninori/items/6826dbd0f37ff9918ab3
+    const token = req.headers.authorization.split('Bearer ')[1]
+    let decotedToken
+    try {
+      decotedToken = await admin.auth().verifyIdToken(token)
+    } catch (e) {
+      console.error(e)
+      res.status(400).send()
+      return
+    }
+
+    const uid = decotedToken.uid
+    removeUserFromDrive(uid)
+    res.status(200).send()
+  } catch (e) {
+    console.error(e)
+    res.status(500).send()
+  }
+}

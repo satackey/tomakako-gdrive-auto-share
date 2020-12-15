@@ -12,3 +12,6 @@ export const Drive共有_表示 = Symbol('Drive共有_表示')
 export const Drive共有_待機 = Symbol('Drive共有_待機')
 export const Drive共有_成功 = Symbol('Drive共有_成功')
 export const Drive共有_失敗 = Symbol('Drive共有_失敗')
+
+export const Drive脱退_待機 = Symbol('Drive脱退_待機')
+export const Drive脱退_失敗 = Symbol('Drive脱退_失敗')

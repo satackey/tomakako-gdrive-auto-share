@@ -5,7 +5,7 @@ import axios from 'axios'
 import {
   Office365認証_表示, Office365認証_待機, Office365認証_成功, Office365認証_失敗,
   Google連携_表示, Google連携_待機, Google連携_成功, Google連携_失敗,
-  Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗,
+  Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗, Drive脱退_待機, Drive脱退_失敗,
 } from './actionTypes'
 
 /*
@@ -112,6 +112,22 @@ export const Drive共有に参加する = () => async dispatch => {
   })
 }
 
+export const Drive共有から脱退する = () => async dispatch => {
+  dispatch(Drive脱退待機する())
+
+  const token = await firebase.auth().currentUser.getIdToken()
+  const options = {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/leave`
+  }
+  axios(options).catch(e => {
+    dispatch(Drive脱退失敗した(e.message))
+  })
+}
+
 export const Drive共有待機する = () => ({
   type: Drive共有_待機,
 })
@@ -123,5 +139,14 @@ export const Drive共有成功した = userData => ({
 
 export const Drive共有失敗した = message => ({
   type: Drive共有_失敗,
+  message,
+})
+
+export const Drive脱退待機する = () => ({
+  type: Drive脱退_待機,
+})
+
+export const Drive脱退失敗した = message => ({
+  type: Drive脱退_失敗,
   message,
 })
