@@ -55,7 +55,7 @@ const inviteUserToDrive = async email => {
   return false
 }
 
-const removeUserFromDrive = uid => {
+const removeUserFromDrive = async uid => {
   const drive = await createDriveClient()
   const db = admin.firestore()
   const userRef = db.doc(`users/${uid}`)
@@ -172,10 +172,10 @@ exports.leave = functions.region('asia-northeast1').https.onRequest(async (req, 
     }
 
     const uid = decotedToken.uid
-    removeUserFromDrive(uid)
+    await removeUserFromDrive(uid)
     res.status(200).send()
   } catch (e) {
     console.error(e)
     res.status(500).send()
   }
-}
+})
