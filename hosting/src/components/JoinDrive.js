@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import cx from "classnames"
 import { Button } from 'react-bulma-components/dist'
 
-import { Drive共有に参加する } from '../redux/actions'
+import { Drive共有に参加する, Drive共有から脱退する } from '../redux/actions'
 
 const JoinDrive = props => {
   const [二次配布禁止に同意, set二次配布禁止に同意] = useState(false)
