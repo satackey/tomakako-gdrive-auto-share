@@ -50,7 +50,7 @@ const inviteUserToDrive = async email => {
   })
 
   if (result.status === 200) {
-    return true
+    return result.data.id
   }
   return false
 }
@@ -104,8 +104,8 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       }
 
       // Todo: すでに招待済みではないか検索
-      const inviteOk = await inviteUserToDrive(googleEmail)
-      if (!inviteOk) {
+      const permissionId = await inviteUserToDrive(googleEmail)
+      if (!permissionId) {
         // users/{userId}/agreed を削除
         res.status(500).send()
         return
@@ -120,6 +120,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         invitedTo: FOLDER_ID,
         sentTo: googleEmail,
         invitedAt: admin.firestore.Timestamp.now(),
+        permissionId,
       })
 
       res.status(201).send()
