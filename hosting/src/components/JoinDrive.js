@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import cx from "classnames"
 import { Button } from 'react-bulma-components/dist'
 
-import { Drive共有に参加する } from '../redux/actions'
+import { Drive共有に参加する, Drive共有から脱退する } from '../redux/actions'
 
 const JoinDrive = props => {
   const [二次配布禁止に同意, set二次配布禁止に同意] = useState(false)
@@ -98,7 +98,7 @@ const JoinDrive = props => {
         }
 
 
-        { props.表示 === '完了' && <>
+        { (props.表示 === '完了' || props.表示 === '脱退処理中') && <>
           <div>
             参加が完了しました
           </div>
@@ -107,7 +107,22 @@ const JoinDrive = props => {
               Googleドライブをみる
             </Button>
           </a>
+          <div>
+            <Button className={
+              cx(
+                props.表示 === '脱退処理中' && 'is-loading',
+              )}
+              onClick={ props.Drive共有から脱退する }>
+              参加をやめる (脱退)
+            </Button>
+          </div>
         </>}
+
+        { props.表示 === '脱退失敗' &&
+          <div>
+            脱退に失敗しました。エラー: { props.脱退失敗のメッセージ }
+          </div>
+        }
 
       </div>
       }
@@ -126,6 +141,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   参加する() {
     dispatch(Drive共有に参加する())
+  },
+  脱退する() {
+    dispatch(Drive共有から脱退する())
   },
 })
 
