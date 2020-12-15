@@ -79,12 +79,12 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       res.set('Access-Control-Allow-Methods', 'OPTIONS, POST')
       res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
       if (req.method === 'OPTIONS') {
-        res.status(200).send()
+        res.status(200).send(`Preflight`)
         return
       }
 
       if (req.method !== 'POST') {
-        res.status(405).send()
+        res.status(405).send(`Method not allowed`)
         return
       }
 
@@ -95,7 +95,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         decotedToken = await admin.auth().verifyIdToken(token)
       } catch (e) {
         console.error(e)
-        res.status(400).send()
+        res.status(400).send(`トークンの認証に失敗しました`)
         return
       }
 
@@ -107,21 +107,28 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       const googleEmail = '' || (user && user.providerData.filter(prov => prov.providerId === 'google.com')[0].email)
 
       if (!office365Email.endsWith('@tomakomai.kosen-ac.jp') || googleEmail === '') {
-        res.status(403).send()
+        res.status(403).send(`苫小牧高専のアカウントではないようです`)
         return
       }
 
       // 先生の場合は弾く
       if (!office365Email.match(/^[a-z]{2}[0-9]{3}/)) {
-        res.status(403).send()
+        res.status(403).send(`学生ではないようです`)
         return
       }
 
-      // Todo: すでに招待済みではないか検索
+      // すでに招待済みではないか検索
+      const db = admin.firestore()
+      const alreadyApprovedUserRef = await db.collection(`users`).where(`approvedBy`, `==`, office365Email).get()
+      if (!alreadyApprovedUserRef.empty) {
+        const user = alreadyApprovedUser.data()
+        res.status(400).send(`すでに ${user.approvedBy} で認証されたGoogle アカウント ${user.invitedTo} が参加済みです`)
+      }
+
       const permissionId = await inviteUserToDrive(googleEmail)
       if (!permissionId) {
         // users/{userId}/agreed を削除
-        res.status(500).send()
+        res.status(500).send(`Google ドライブに招待する際にエラーが発生しました。時間をおいて再度お試しください`)
         return
       }
 
@@ -137,11 +144,11 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         permissionId,
       })
 
-      res.status(201).send()
+      res.status(201).send(`成功しました`)
       return
     } catch (e) {
       console.error(e)
-      res.status(500).send()
+      res.status(500).send(`何らかのエラーが発生しました。時間をおいて再度お試しください`)
     }
   })
 
@@ -151,12 +158,12 @@ exports.leave = functions.region('asia-northeast1').https.onRequest(async (req, 
     res.set('Access-Control-Allow-Methods', 'OPTIONS, POST')
     res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization')
     if (req.method === 'OPTIONS') {
-      res.status(200).send()
+      res.status(200).send(`Preflight`)
       return
     }
 
     if (req.method !== 'POST') {
-      res.status(405).send()
+      res.status(405).send(`Method not allowed`)
       return
     }
 
@@ -167,15 +174,15 @@ exports.leave = functions.region('asia-northeast1').https.onRequest(async (req, 
       decotedToken = await admin.auth().verifyIdToken(token)
     } catch (e) {
       console.error(e)
-      res.status(400).send()
+      res.status(400).send(`トークンの認証に失敗しました`)
       return
     }
 
     const uid = decotedToken.uid
     await removeUserFromDrive(uid)
-    res.status(200).send()
+    res.status(200).send(`成功しました`)
   } catch (e) {
     console.error(e)
-    res.status(500).send()
+    res.status(500).send(`何らかのエラーが発生しました。時間をおいて再度お試しください`)
   }
 })
