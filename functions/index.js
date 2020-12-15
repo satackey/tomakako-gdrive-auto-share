@@ -117,6 +117,8 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         return
       }
 
+      const db = admin.firestore()
+
       // すでに招待済みではないか検索
       const alreadyApprovedUserRef = await db.collection(`users`).where(`approvedBy`, `==`, office365Email).get()
       if (!alreadyApprovedUserRef.empty) {
@@ -131,7 +133,6 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
         return
       }
 
-      const db = admin.firestore()
       const userRef = db.doc(`users/${uid}`)
 
       await userRef.create({
