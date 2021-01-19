@@ -103,7 +103,7 @@ const JoinDrive = props => {
             参加が完了しました
           </div>
           <a href={`https://drive.google.com/drive/folders/${props.ドライブID}`}>
-            <Button className="is-primary">
+            <Button className="is-primary my-1">
               Googleドライブをみる
             </Button>
           </a>
@@ -113,6 +113,7 @@ const JoinDrive = props => {
                 props.表示 === '脱退処理中' && 'is-loading',
                 'is-danger',
                 'is-outlined',
+                'my-1',
               )}
               onClick={ props.脱退する }>
               参加をやめる (脱退)
