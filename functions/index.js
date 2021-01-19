@@ -122,7 +122,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       // すでに招待済みではないか検索
       const alreadyApprovedUserRef = await db.collection(`users`).where(`approvedBy`, `==`, office365Email).get()
       if (!alreadyApprovedUserRef.empty) {
-        const user = alreadyApprovedUserRef.docs()[0]
+        const user = alreadyApprovedUserRef.docs[0]
         res.status(400).send(`すでに ${user.approvedBy} で認証されたGoogle アカウント ${user.invitedTo} が参加済みです`)
       }
 
