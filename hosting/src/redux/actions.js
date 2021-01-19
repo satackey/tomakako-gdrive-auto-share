@@ -108,7 +108,7 @@ export const Drive共有に参加する = () => async dispatch => {
     url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/join`
   }
   axios(options).catch(e => {
-    dispatch(Drive共有失敗した(e.message))
+    dispatch(Drive共有失敗した(e.response?.data))
   })
 }
 
@@ -124,7 +124,7 @@ export const Drive共有から脱退する = () => async dispatch => {
     url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/leave`
   }
   axios(options).catch(e => {
-    dispatch(Drive脱退失敗した(e.message))
+    dispatch(Drive脱退失敗した(e.response?.data))
   })
 }
 
