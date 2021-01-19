@@ -4,7 +4,7 @@ import axios from 'axios'
 
 import {
   Office365認証_表示, Office365認証_待機, Office365認証_成功, Office365認証_失敗,
-  Google連携_表示, Google連携_待機, Google連携_成功, Google連携_失敗,
+  Google連携_表示, Google連携_待機, Google連携_成功, Google連携_失敗, Google連携解除_待機,
   Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗, Drive脱退_待機, Drive脱退_失敗,
 } from './actionTypes'
 
