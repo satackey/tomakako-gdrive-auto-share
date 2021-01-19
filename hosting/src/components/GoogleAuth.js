@@ -62,12 +62,12 @@ const GoogleAuth = props => {
                 認証済み: { props.メール }
               </div>
               <div>
-                <Button onClick={ props.連携解除する } disable={ props.ドライブ参加完了 }>
+                <Button onClick={ props.連携解除する } disabled={ props.ドライブ参加完了 }>
                   連携解除
                 </Button>
 
                 { props.ドライブ参加完了 &&
-                  <div className="has-text-info">
+                  <div className="has-text-dark">
                     連携解除するには先に共有から脱退する必要があります
                   </div>
                 }
