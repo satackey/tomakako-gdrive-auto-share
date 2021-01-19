@@ -136,6 +136,8 @@ const mapStateToProps = state => ({
   参加認証完了: state.office365Auth.表示 === '完了' && state.googleAuth.表示 === '完了',
   送信されたメール: state.joinDrive.送信されたメール,
   ドライブID: state.joinDrive.ドライブID,
+  認証失敗のメッセージ: state.joinDrive.認証失敗のメッセージ,
+  脱退失敗のメッセージ: state.joinDrive.脱退失敗のメッセージ,
 })
 
 const mapDispatchToProps = dispatch => ({
