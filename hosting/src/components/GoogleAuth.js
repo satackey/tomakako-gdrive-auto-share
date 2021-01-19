@@ -64,9 +64,16 @@ const GoogleAuth = props => {
                 認証済み: { props.メール }
               </div>
               <div>
-                <Button onClick={ props.ログアウトする }>
-                  ログアウトする
+                <Button onClick={ props.連携解除する } disable={ props.ドライブ参加完了 }>
+                  連携解除
                 </Button>
+
+                { props.ドライブ参加完了 &&
+                  <div className="has-text-info">
+                    連携解除するには先に共有から脱退する必要があります
+                  </div>
+                }
+                
               </div>
             </>
           }
@@ -78,6 +85,7 @@ const GoogleAuth = props => {
   
 const mapStateToProps = state => ({
   学校認証完了: state.office365Auth.表示 === '完了',
+  ドライブ参加完了: state.joinDrive.表示 === '完了',
   表示: state.googleAuth.表示,
   メール: state.googleAuth.メール,
   認証失敗のメッセージ: state.googleAuth.認証失敗のメッセージ,
@@ -89,8 +97,8 @@ const mapDispatchToProps = (dispatch, props) => {
       dispatch(Google連携する())
     },
 
-    ログアウトする() {
-      firebase.auth().signOut()
+    連携解除する() {
+      firebase.auth().currentUser.unlink(new firebase.auth.GoogleAuthProvider().providerId)
     },
   }
 }
