@@ -8,6 +8,8 @@ import {
   Drive共有_表示, Drive共有_待機, Drive共有_成功, Drive共有_失敗, Drive脱退_待機, Drive脱退_失敗,
 } from './actionTypes'
 
+const db = firebase.firestore()
+
 /*
  * Office365認証
  */
@@ -85,6 +87,11 @@ export const Google連携失敗した = () => ({
   type: Google連携_失敗,
 })
 
+export const Google連携解除する = () => async dispatch => {
+  await firebase.auth().currentUser.unlink(new firebase.auth.GoogleAuthProvider().providerId)
+  dispatch(ユーザ情報を更新する(firebase.auth().currentUser))
+}
+
 /*
  * Google Drive 共有
  */
@@ -152,3 +159,37 @@ export const Drive脱退失敗した = message => ({
   type: Drive脱退_失敗,
   message,
 })
+
+export const ユーザ情報を更新する = (userState) => async dispatch => {
+  let authorized = false
+
+  const office365Data = null || (userState && userState.providerData.filter(prov => prov.providerId === 'microsoft.com')[0])
+  if (office365Data) {
+    dispatch(Office365認証成功した(office365Data.email))
+    authorized = true
+  } else {
+    dispatch(Office365認証がされていない())
+  }
+
+  const googleData = null || (userState && userState.providerData.filter(prov => prov.providerId === 'google.com')[0])
+  if (googleData) {
+    dispatch(Google連携成功した(googleData.email))
+    authorized = true
+  } else {
+    dispatch(Google連携がされていない())
+  }
+
+  if (!authorized) {
+    dispatch(Drive共有がされていない())
+    return
+  }
+
+  db.doc(`users/${userState.uid}`).onSnapshot(userStore => {
+    if (userStore.exists) {
+      const userData = userStore.data()
+      dispatch(Drive共有成功した(userData))
+    } else {
+      dispatch(Drive共有がされていない())
+    }
+  })
+}

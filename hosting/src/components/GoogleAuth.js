@@ -3,9 +3,7 @@ import { connect } from 'react-redux'
 
 import cx from "classnames"
 
-import firebase from 'firebase/app'
-
-import { Google連携する } from '../redux/actions'
+import { Google連携する, Google連携解除する } from '../redux/actions'
 import { Button } from 'react-bulma-components/dist'
 
 const GoogleAuth = props => {
@@ -98,7 +96,7 @@ const mapDispatchToProps = (dispatch, props) => {
     },
 
     連携解除する() {
-      firebase.auth().currentUser.unlink(new firebase.auth.GoogleAuthProvider().providerId)
+      dispatch(Google連携解除する())
     },
   }
 }
