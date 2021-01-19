@@ -105,7 +105,8 @@ export const Drive共有に参加する = () => async dispatch => {
     headers: {
       'Authorization': `Bearer ${token}`,
     },
-    url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/join`
+    url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/join`,
+    responseType: `text`,
   }
   axios(options).catch(e => {
     dispatch(Drive共有失敗した(e.response?.data))
@@ -121,7 +122,8 @@ export const Drive共有から脱退する = () => async dispatch => {
     headers: {
       'Authorization': `Bearer ${token}`,
     },
-    url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/leave`
+    url: `${process.env['REACT_APP_FIREBASE_FUNCTION_BASE']}/leave`,
+    responseType: `text`,
   }
   axios(options).catch(e => {
     dispatch(Drive脱退失敗した(e.response?.data))
