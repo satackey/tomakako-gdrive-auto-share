@@ -1,4 +1,4 @@
-import { Google連携_表示, Google連携_待機, Google連携_成功, Google連携_失敗 } from '../actionTypes'
+import { Google連携_表示, Google連携_待機, Google連携_成功, Google連携_失敗, Google連携解除_待機 } from '../actionTypes'
 
 const initalState = {
   表示: '初期読み込み中',
@@ -37,6 +37,12 @@ export default (state = initalState, action) => {
         表示: '失敗',
         メール: '',
         認証失敗のメッセージ: action.認証失敗のメッセージ
+      })
+    }
+
+    case Google連携解除_待機: {
+      return Object.assign({}, state, {
+        表示: '連携解除処理中'
       })
     }
 

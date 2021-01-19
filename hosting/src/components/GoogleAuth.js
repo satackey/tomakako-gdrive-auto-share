@@ -62,7 +62,15 @@ const GoogleAuth = props => {
                 認証済み: { props.メール }
               </div>
               <div>
-                <Button onClick={ props.連携解除する } disabled={ props.ドライブ参加完了 }>
+                <Button 
+                  className={cx(
+                    props.表示 === '連携解除処理中' && 'is-loading',
+                    'is-danger',
+                    'is-outlined',
+                  )}
+                  onClick={ props.連携解除する }
+                  disabled={ props.ドライブ参加完了 }
+                >
                   連携解除
                 </Button>
 

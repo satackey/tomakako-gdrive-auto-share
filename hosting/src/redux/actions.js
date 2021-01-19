@@ -88,9 +88,14 @@ export const Google連携失敗した = () => ({
 })
 
 export const Google連携解除する = () => async dispatch => {
+  dispatch(Google連携解除待機する())
   await firebase.auth().currentUser.unlink(new firebase.auth.GoogleAuthProvider().providerId)
   dispatch(ユーザ情報を更新する(firebase.auth().currentUser))
 }
+
+export const Google連携解除待機する = () => ({
+  type: Google連携解除_待機,
+})
 
 /*
  * Google Drive 共有
