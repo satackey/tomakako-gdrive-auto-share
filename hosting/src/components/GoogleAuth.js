@@ -69,7 +69,7 @@ const GoogleAuth = props => {
                     'is-outlined',
                   )}
                   onClick={ props.連携解除する }
-                  disabled={ props.ドライブ参加完了 }
+                  disabled={ !props.連携解除可能 }
                 >
                   連携解除
                 </Button>
@@ -92,6 +92,7 @@ const GoogleAuth = props => {
 const mapStateToProps = state => ({
   学校認証完了: state.office365Auth.表示 === '完了',
   ドライブ参加完了: state.joinDrive.表示 === '完了' || state.joinDrive.表示 === '脱退処理中',
+  連携解除可能: state.joinDrive.表示 !== '参加要求',
   表示: state.googleAuth.表示,
   メール: state.googleAuth.メール,
   認証失敗のメッセージ: state.googleAuth.認証失敗のメッセージ,
