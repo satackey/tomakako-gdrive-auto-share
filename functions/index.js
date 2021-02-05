@@ -68,7 +68,7 @@ const removeUserFromDrive = async uid => {
   if (result.status !== 204) {
     throw new Error(JSON.stringify(result))
   }
-  console.log(`removed: `, userData)
+  console.log(`removed: `, JSON.stringify(userData))
 
   await userRef.delete()
   return true
@@ -146,7 +146,7 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       }
 
       await userRef.create(userData)
-      console.log(`joined: `, userData)
+      console.log(`joined: `, JSON.stringify(userData))
 
       res.status(201).send(`成功しました`)
       return
