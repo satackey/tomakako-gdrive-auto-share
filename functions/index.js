@@ -68,6 +68,7 @@ const removeUserFromDrive = async uid => {
   if (result.status !== 204) {
     throw new Error(JSON.stringify(result))
   }
+  console.log(`removed: `, userData)
 
   await userRef.delete()
   return true
@@ -135,15 +136,17 @@ exports.join = functions.region('asia-northeast1').https.onRequest(async (req, r
       }
 
       const userRef = db.doc(`users/${uid}`)
-
-      await userRef.create({
+      const userData = {
         agreedTo: 'v1',
         approvedBy: office365Email,
         invitedTo: FOLDER_ID,
         sentTo: googleEmail,
         invitedAt: admin.firestore.Timestamp.now(),
         permissionId,
-      })
+      }
+
+      await userRef.create(userData)
+      console.log(`joined: `, userData)
 
       res.status(201).send(`成功しました`)
       return
