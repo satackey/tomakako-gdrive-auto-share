@@ -1,4 +1,4 @@
-FROM node:10.23.3-slim
+FROM node:10.24.0-slim
 
 RUN set -x \
     && mkdir -p /usr/share/man/man1 \
